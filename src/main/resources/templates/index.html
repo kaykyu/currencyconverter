@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Currency Converter</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Currency Exchange</h1>
+        <hr>
+        <br>
+        <form method="POST" data-th-action="@{/convert}" data-th-object="${request}">
+            <table>
+                <tr>
+                    <td>From:</td>
+                    <td><select name="currFrom" data-th-field="${request.currFrom}">
+                            <option data-th-each="curr : ${currency}" data-th-text="${curr.name} + ' ' + ${curr.symbol}"
+                                data-th-value="${curr.id}">
+                            </option>
+                        </select></td>
+                </tr>
+                <tr>
+                    <td>To:</td>
+                    <td><select name="currTo" data-th-field="${request.currTo}">
+                            <option data-th-each="curr : ${currency}" data-th-text="${curr.name} + ' ' + ${curr.symbol}"
+                                data-th-value="${curr.id}">
+                            </option>
+                        </select></td>
+                </tr>
+                <tr>
+                    <td>Amount:</td>
+                    <td><input type="text" name="amount" data-th-field="${request.amount}"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><button type="submit">Convert</button></td>
+                </tr>
+            </table>
+        </form>
+
+        <div data-th-if="${convert}">
+            <p><br><br></p>
+            <span data-th-text="${currFrom.name}"></span>: <span data-th-text="${currFrom.symbol}"></span><span
+                data-th-text="${request.amount}"></span></br>
+            <span data-th-text="${currTo.name}"></span>: <span data-th-text="${currTo.symbol}"></span><span
+                data-th-text="${result}"></span>
+        </div>
+    </div>
+</body>
+
+</html>
